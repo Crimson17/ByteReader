@@ -12,11 +12,10 @@ int main(void)
     GetConsoleScreenBufferInfo(hStdOut, &consoleInfo);
     WORD saved_attributes = consoleInfo.wAttributes;
 
-    // Hide console cursor
+    // Prepare to hide console cursor
     CONSOLE_CURSOR_INFO curInfo;
     GetConsoleCursorInfo(hStdOut, &curInfo);
     curInfo.bVisible = FALSE;
-    SetConsoleCursorInfo(hStdOut, &curInfo);
 
     // Get file name input
     printf("File name: ");
@@ -29,6 +28,9 @@ int main(void)
             break;
         }
     }
+
+    // Hide console cursor
+    SetConsoleCursorInfo(hStdOut, &curInfo);
 
     // Open file
     FILE *fp = fopen(fileName, "rb");
@@ -44,7 +46,9 @@ int main(void)
     int dataLen = ftell(fp);
 
     // Output length
-    printf("Data length: %d\n", dataLen);
+    printf("Data length: ");
+    SetConsoleTextAttribute(hStdOut, 2);
+    printf("%d\n", dataLen);
 
     // Allocate memory for the file data
     char *data = (char *)calloc(dataLen, sizeof(char));
