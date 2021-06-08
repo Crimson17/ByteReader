@@ -36,7 +36,7 @@ int main(void)
     FILE *fp = fopen(fileName, "rb");
     if (fp == NULL)
     {
-        printf("File \"%s\" doesn't exist. \nPress any key to exit...", fileName);
+        printf("File \"%s\" doesn't exist! \nPress ENTER to exit...", fileName);
         getchar();
         return -1;
     }
