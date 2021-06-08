@@ -75,8 +75,8 @@ int main(void)
             rowCounter++;
             SetConsoleTextAttribute(hStdOut, 6);
             printf("\n0x%08x: ", rowCounter);
+            SetConsoleTextAttribute(hStdOut, saved_attributes);
         }
-        SetConsoleTextAttribute(hStdOut, saved_attributes);
         printf("0x%02x ", *(data + i));
     }
 
