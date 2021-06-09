@@ -1,73 +1,76 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <windows.h>
+#include <string.h>
 
-char fileName[50] = "";
+char storeFileName[] = "bytes.txt";
+char dataFileName[50] = "";
 
 int main(void)
 {
-    // Get console info
-    HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
-    GetConsoleScreenBufferInfo(hStdOut, &consoleInfo);
-    WORD saved_attributes = consoleInfo.wAttributes;
-
-    // Prepare to hide console cursor
-    CONSOLE_CURSOR_INFO curInfo;
-    GetConsoleCursorInfo(hStdOut, &curInfo);
-    curInfo.bVisible = FALSE;
-
     // Get file name input
     printf("File name: ");
-    fgets(fileName, 49, stdin);
+    fgets(dataFileName, 49, stdin);
     for (int i = 0; i < 49; i++)
     {
-        if (fileName[i] == '\n')
+        if (dataFileName[i] == '\n')
         {
-            fileName[i] = '\0';
+            dataFileName[i] = '\0';
             break;
         }
     }
 
-    // Hide console cursor
-    SetConsoleCursorInfo(hStdOut, &curInfo);
-
-    // Open file
-    FILE *fp = fopen(fileName, "rb");
-    if (fp == NULL)
+    // Compare file names
+    if (!strcmp(storeFileName, dataFileName))
     {
-        printf("File \"%s\" doesn't exist! \nPress ENTER to exit...", fileName);
+        printf("The file name can't be \"%s\"\nPress ENTER to exit...", storeFileName);
         getchar();
         return -1;
     }
 
+    // Open file
+    FILE *dataFile = fopen(dataFileName, "rb");
+    if (dataFile == NULL)
+    {
+        printf("File \"%s\" doesn't exist! \nPress ENTER to exit...", dataFileName);
+        getchar();
+        return -1;
+    }
+
+    // Open/Create "bytes.txt"
+    FILE *storeFile = fopen(storeFileName, "w");
+    if (storeFile == NULL)
+    {
+        fclose(dataFile);
+        return -1;
+    }
+
+    // Save file name to text file
+    fprintf(storeFile, "File name: %s\n", dataFileName);
+
     // Seek to the end of the file and get file length
-    fseek(fp, 0, SEEK_END);
-    int dataLen = ftell(fp);
+    fseek(dataFile, 0, SEEK_END);
+    int dataLen = ftell(dataFile);
 
     // Output length
-    printf("Data length: ");
-    SetConsoleTextAttribute(hStdOut, 2);
-    printf("%d\n", dataLen);
+    fprintf(storeFile, "Data length: %d\n", dataLen);
 
     // Allocate memory for the file data
     unsigned char *data = (unsigned char *)calloc(dataLen, sizeof(unsigned char));
     if (data == NULL)
     {
-        fclose(fp);
+        fclose(dataFile);
         return -1;
     }
 
     // Seek to start and read data to buffer
-    fseek(fp, 0, SEEK_SET);
-    fread(data, sizeof(unsigned char), dataLen, fp);
+    fseek(dataFile, 0, SEEK_SET);
+    fread(data, sizeof(unsigned char), dataLen, dataFile);
 
     // Close file stream
-    fclose(fp);
+    fclose(dataFile);
 
     // Print COLLUMN info
-    SetConsoleTextAttribute(hStdOut, 6);
-    printf("             00   01   02   03   04   05   06   07   08   09   0A   0B   0C   0D   0E   0F");
+    fprintf(storeFile, "             00   01   02   03   04   05   06   07   08   09   0A   0B   0C   0D   0E   0F");
 
     // Print ROW info and byte data
     int rowCounter = 0;
@@ -76,14 +79,13 @@ int main(void)
         if (i % 16 == 0)
         {
             rowCounter++;
-            SetConsoleTextAttribute(hStdOut, 6);
-            printf("\n0x%08X: ", rowCounter);
-            SetConsoleTextAttribute(hStdOut, saved_attributes);
+            fprintf(storeFile, "\n0x%08X: ", rowCounter);
         }
-        printf("0x%02X ", *(data + i));
+        fprintf(storeFile, "0x%02X ", *(data + i));
     }
 
-    // Free data
+    // Close store file and free data
+    fclose(storeFile);
     free(data);
 
     // Wait for input to close the console
