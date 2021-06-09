@@ -89,6 +89,7 @@ int main(void)
     free(data);
 
     // Wait for input to close the console
+    printf("Finished!");
     getchar();
     return 0;
 }
