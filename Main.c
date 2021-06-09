@@ -2,15 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define maxFileNameLen 100
+
 char storeFileName[] = "bytes.txt";
-char dataFileName[50] = "";
+char dataFileName[maxFileNameLen] = "";
 
 int main(void)
 {
     // Get file name input
     printf("File name: ");
-    fgets(dataFileName, 49, stdin);
-    for (int i = 0; i < 49; i++)
+    fgets(dataFileName, maxFileNameLen - 1, stdin);
+    for (int i = 0; i < maxFileNameLen; i++)
     {
         if (dataFileName[i] == '\n')
         {
