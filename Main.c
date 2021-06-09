@@ -51,7 +51,7 @@ int main(void)
     printf("%d\n", dataLen);
 
     // Allocate memory for the file data
-    char *data = (char *)calloc(dataLen, sizeof(char));
+    unsigned char *data = (unsigned char *)calloc(dataLen, sizeof(unsigned char));
     if (data == NULL)
     {
         fclose(fp);
@@ -60,7 +60,10 @@ int main(void)
 
     // Seek to start and read data to buffer
     fseek(fp, 0, SEEK_SET);
-    fread(data, sizeof(char), dataLen, fp);
+    fread(data, sizeof(unsigned char), dataLen, fp);
+
+    // Close file stream
+    fclose(fp);
 
     // Print COLLUMN info
     SetConsoleTextAttribute(hStdOut, 6);
@@ -80,8 +83,7 @@ int main(void)
         printf("0x%02x ", *(data + i));
     }
 
-    // Close file stream and free data
-    fclose(fp);
+    // Free data
     free(data);
 
     // Wait for input to close the console
