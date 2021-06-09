@@ -77,10 +77,10 @@ int main(void)
         {
             rowCounter++;
             SetConsoleTextAttribute(hStdOut, 6);
-            printf("\n0x%08x: ", rowCounter);
+            printf("\n0x%08X: ", rowCounter);
             SetConsoleTextAttribute(hStdOut, saved_attributes);
         }
-        printf("0x%02x ", *(data + i));
+        printf("0x%02X ", *(data + i));
     }
 
     // Free data
