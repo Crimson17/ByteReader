@@ -81,7 +81,7 @@ int main() {
                 fprintf(outputFile, "0x%02X ", dataBuffer[ind]);
             }
             else {
-                fprintf(outputFile, "0x   ", dataBuffer[ind]);
+                fprintf(outputFile, "0x   ");
             }
         }
         
