@@ -1,2 +1,2 @@
-# C_ReadFileBytes
+# Byte Reader
 Really simple C byte reader :)
