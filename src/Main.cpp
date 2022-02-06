@@ -8,11 +8,16 @@ typedef unsigned char byte;
 
 const std::string bytesFileName = "bytes.txt";
 
-int main() {
+int main(int argc, char** argv) {
     // Getting the file name
     std::string fileName;
-    printf("File name: ");
-    std::getline(std::cin, fileName);
+    if (argc > 1) {
+        fileName = argv[1];
+    }
+    else {
+        printf("File name: ");
+        std::getline(std::cin, fileName);
+    }
 
     // Comparing the file names
     if (fileName == bytesFileName) {
@@ -45,7 +50,7 @@ int main() {
     const int fileSize = ftell(inputFile);
 
     // Saving the file size
-    fprintf(outputFile, "File size: %d\n", fileSize);
+    fprintf(outputFile, "File size: %d bytes\n\n", fileSize);
 
     // Allocating the byte buffer
     std::vector<byte> dataBuffer(fileSize);
@@ -81,7 +86,7 @@ int main() {
                 fprintf(outputFile, "0x%02X ", dataBuffer[ind]);
             }
             else {
-                fprintf(outputFile, "0x   ");
+                fprintf(outputFile, "     ");
             }
         }
         
