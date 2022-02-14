@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{7ade0916-d0c5-405c-b695-e11efb25e9b9}</ProjectGuid>
-    <RootNamespace>ReadFileBytes</RootNamespace>
+    <ProjectGuid>{cd9311c4-6be3-4ecf-92bd-f52cf6aa41ec}</ProjectGuid>
+    <RootNamespace>ByteReader</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

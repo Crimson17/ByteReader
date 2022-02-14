@@ -9,9 +9,12 @@ typedef unsigned char byte;
 const std::string bytesFileName = "bytes.txt";
 
 int main(int argc, char** argv) {
+    // Argument check
+    const bool argumentInput = argc > 1;
+
     // Getting the file name
     std::string fileName;
-    if (argc > 1) {
+    if (argumentInput) {
         fileName = argv[1];
     }
     else {
@@ -115,5 +118,5 @@ int main(int argc, char** argv) {
 
     // Exit
     printf("Finished!");
-    std::cin.get();
+    if (!argumentInput) std::cin.get();
 }
