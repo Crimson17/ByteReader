@@ -1,2 +1,2 @@
 # Byte Reader
-Really simple C byte reader :)
+C++ byte reader
