@@ -5,7 +5,7 @@
 #include <vector>
 
 
-static std::string read_file_name(const int argc, char** argv)
+static std::string read_file_name(const int argc, const char** argv)
 {
     std::string file_name;
     if (argc > 1) {
@@ -88,7 +88,7 @@ static void save_file_bytes(const std::string& filepath, const std::vector<uint8
     file.close();
 }
 
-int main(const int argc, char** argv)
+int main(const int argc, const char** argv)
 {
     const std::string file_name = read_file_name(argc, argv);
     

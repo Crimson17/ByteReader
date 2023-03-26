@@ -1,2 +1,5 @@
-# Byte Reader
-C++ byte reader
+## About
+C++ byte display
+
+## Screenshot
+![](screens/example.png)
